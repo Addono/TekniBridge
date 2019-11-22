@@ -1,6 +1,6 @@
 import time
 
-import profiles
+from profiles import temp2rgb
 
 from math import exp
 
