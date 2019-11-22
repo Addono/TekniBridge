@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     while True:
         for temp in range(1000, 40000, 10):
-           color_wipe(strip, temp2rgb(temp, 20), 5)
+            color_wipe(strip, temp2rgb(temp, 20), 5)
         #for duration in range(200, 1000, 50):
         #    firstOrderResponse(strip, Color(60, 120, 60), duration)
         #   color_wipe(strip, Color(0,0,0), 5)
