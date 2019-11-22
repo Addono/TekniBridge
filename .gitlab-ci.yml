@@ -1,7 +1,8 @@
 variables:
   INSTALL_DIR: "/usr/bin/led_strip"
-  
+
 run:
+  stage: deploy
   script:
     # Print out python version for debugging
     - python -V
