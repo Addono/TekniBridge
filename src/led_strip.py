@@ -35,9 +35,9 @@ if __name__ == '__main__':
     # Intialize the library (must be called once before other functions).
     strip.begin()
 
-    for temp in range(1000, 40000, 500):
-        colorWipe(strip, temp2rgb(temp,30),10)
-        colorWipe(strip, Color(0,0,0),1)
+    for temp in range(1000, 40000, 10):
+        colorWipe(strip, temp2rgb(temp,20),5)
+        
 """     void LEDStrip::temperature(float temperature)
 {
 

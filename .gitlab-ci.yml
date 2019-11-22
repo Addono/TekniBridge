@@ -20,6 +20,7 @@ cache:
 
 before_script:
   - python -V  # Print out python version for debugging
+  - systemctl stop led_strip
   - apt-get install python-pip python3-numpy -y
   - pip install virtualenv 
   - virtualenv venv
