@@ -3,6 +3,8 @@ variables:
 
 run:
   stage: deploy
+  environment:
+    name: production
   script:
     # Print out python version for debugging
     - python -V
