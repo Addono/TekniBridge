@@ -48,6 +48,7 @@ if __name__ == '__main__':
 
     # Initialize the library (must be called once before other functions).
     strip.begin()
+
     while True:
         # for temp in range(1000, 40000, 10):
         #   color_wipe(strip, temp2rgb(temp, 20), 5)
