@@ -33,7 +33,7 @@ def color_wipe(strip, color, wait_ms=50):
 def firstOrderResponse(strip, color, T_millis):
     for i in range(0, T_millis, 10):
         index = 1 - exp(-float(i) / float(T_millis))
-        index_led = round(index * float(strip.numPixels()))
+        index_led = int(round(index * float(strip.numPixels())))
         for j in range(0, index_led):
             strip.setPixelColor(j, color)
         for j in range(index_led, strip.numPixels()):
