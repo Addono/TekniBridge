@@ -1,5 +1,7 @@
 import time
 
+import profiles
+
 from math import exp
 
 try:
