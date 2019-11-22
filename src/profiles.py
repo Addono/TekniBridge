@@ -1,9 +1,12 @@
 
+from math import log
+from rpi_ws281x import PixelStrip, Color
+
 def temp2rgb(temperature):
     temperature/=100
     # red
     if temperature < 66:
-        red = 255;
+        red = 255
     else:
         red = (329.6987 * pow(temperature - 60.0, -0.1332))
 
@@ -21,7 +24,7 @@ def temp2rgb(temperature):
             blue = 0;
         else:
             blue = (138.5177312231 * log(temperature) - 305.0447927307);
-    return Color(green, red, blue)
+    return Color(int(round(green)), int(round(red)), int(round(blue)))
 """
  temperature /= 100;
     Vec3b rgb;

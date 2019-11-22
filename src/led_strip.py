@@ -1,5 +1,5 @@
 import time
-import profiles
+from profiles import temp2rgb
 from rpi_ws281x import PixelStrip, Color
 
 # LED strip configuration:
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     # Intialize the library (must be called once before other functions).
     strip.begin()
 
-    colorWipe(strip, temp2rgb(1000))
+    colorWipe(strip, temp2rgb(40000))
 
 
 
