@@ -20,9 +20,10 @@ cache:
 
 before_script:
   - python -V  # Print out python version for debugging
-#  - pip install virtualenv
-#  - virtualenv venv
-#  - source venv/bin/activate
+  - apt-get install python-pip -y
+  - pip install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
 
 #test:
 #  script:
@@ -43,7 +44,7 @@ run:
             [Service]
             Type=simple
             Restart=on-failure
-            ExecStart=/usr/bin/python3 /usr/bin/led_strip/led_strip.py
+            ExecStart=/usr/bin/led_strip/venv/bin/python /usr/bin/led_strip/led_strip.py
             StandardInput=tty-force
 
             [Install]
