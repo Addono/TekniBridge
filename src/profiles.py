@@ -34,4 +34,4 @@ def temp2rgb(temp, brightness=100.0):
     blue *= float(brightness) / 100
     print(str(green) + " " + str(red) + " " + str(blue))
 
-    return Color( int(round(red)),int(round(green)), int(round(blue)))
+    return Color(int(round(red)), int(round(green)), int(round(blue)))

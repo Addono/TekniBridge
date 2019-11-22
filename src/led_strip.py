@@ -20,7 +20,7 @@ startLED = 28
 
 
 # Define functions which animate LEDs in various ways.
-def colorWipe(strip, color, wait_ms=50):
+def color_wipe(strip, color, wait_ms=50):
     """Wipe color across display a pixel at a time."""
     for i in range(startLED):
         strip.setPixelColor(i, Color(0, 0, 0))
@@ -31,12 +31,14 @@ def colorWipe(strip, color, wait_ms=50):
 
 
 if __name__ == '__main__':
+    # Create the LED strip object
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
-    # Intialize the library (must be called once before other functions).
+
+    # Initialize the library (must be called once before other functions).
     strip.begin()
 
     for temp in range(1000, 40000, 10):
-        colorWipe(strip, temp2rgb(temp, 20), 5)
+        color_wipe(strip, temp2rgb(temp, 20), 5)
 
 """     void LEDStrip::temperature(float temperature)
 {
