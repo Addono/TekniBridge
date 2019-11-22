@@ -2,6 +2,8 @@ import time
 
 from profiles import temp2rgb
 
+from math import exp
+
 try:
     from rpi_ws281x import PixelStrip, Color
 except ModuleNotFoundError:
@@ -29,6 +31,17 @@ def color_wipe(strip, color, wait_ms=50):
         strip.show()
         time.sleep(wait_ms / 1000.0)
 
+def firstOrderResponse(strip, color, T_millis):
+    t1 = time.time()
+    for i in range(T_millis):
+        index = 1- exp(-i/T_millis)
+        index_led = round(index * float(strip.numPixels()))
+        for j in range(0, index_led):
+            strip.setPixelColor(j, color)
+        for j in range(index_led,strip.numPixels()):
+            strip.setPixelColor(j, Color(0,0,0))
+        strip.show()
+
 
 if __name__ == '__main__':
     # Create the LED strip object
@@ -36,9 +49,12 @@ if __name__ == '__main__':
 
     # Initialize the library (must be called once before other functions).
     strip.begin()
-
-    for temp in range(1000, 40000, 10):
-        color_wipe(strip, temp2rgb(temp, 20), 5)
+    while():
+        #for temp in range(1000, 40000, 10):
+         #   color_wipe(strip, temp2rgb(temp, 20), 5)
+        for time in range(200,2000, 100):
+            firstOrderResponse(strip,Color(80,100,80),time)
+            firstOrderResponse(strip,Color(0,0,0),time)
 
 """     void LEDStrip::temperature(float temperature)
 {
