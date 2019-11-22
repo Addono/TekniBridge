@@ -32,14 +32,15 @@ def color_wipe(strip, color, wait_ms=50):
         time.sleep(wait_ms / 1000.0)
 
 def firstOrderResponse(strip, color, T_millis):
-    t1 = time.time()
-    for i in range(T_millis):
+    
+    for i in range(0,T_millis,10):
         index = 1- exp(-i/T_millis)
         index_led = round(index * float(strip.numPixels()))
         for j in range(0, index_led):
             strip.setPixelColor(j, color)
         for j in range(index_led,strip.numPixels()):
             strip.setPixelColor(j, Color(0,0,0))
+        time.sleep(0.01)
         strip.show()
 
 
