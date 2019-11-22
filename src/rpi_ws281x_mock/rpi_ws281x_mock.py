@@ -1,5 +1,3 @@
-import atexit
-
 try:
     xrange(0)
 except NameError:
