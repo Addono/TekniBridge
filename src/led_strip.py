@@ -1,5 +1,5 @@
 import time
-import profiles
+from profiles import temp2rgb
 from rpi_ws281x import PixelStrip, Color
 
 # LED strip configuration:
@@ -15,7 +15,9 @@ LED_CHANNEL = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 # Define functions which animate LEDs in various ways.
 def colorWipe(strip, color, wait_ms=50):
     """Wipe color across display a pixel at a time."""
-    for i in range(strip.numPixels()):
+    for i in range(20):
+        strip.setPixelColor(i, Color(0,0,0))
+    for i in range(20,strip.numPixels()):
         strip.setPixelColor(i, color)
         strip.show()
         time.sleep(wait_ms / 1000.0)
@@ -26,8 +28,8 @@ if __name__ == '__main__':
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     # Intialize the library (must be called once before other functions).
     strip.begin()
-
-    colorWipe(strip, temp2rgb(1000))
+    for temp in range(1000,40000,1000):
+        colorWipe(strip, temp2rgb(temp))
 
 
 
