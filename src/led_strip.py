@@ -1,7 +1,5 @@
 import time
 
-from profiles import temp2rgb
-
 from math import exp
 
 try:
@@ -31,15 +29,15 @@ def color_wipe(strip, color, wait_ms=50):
         strip.show()
         time.sleep(wait_ms / 1000.0)
 
+
 def firstOrderResponse(strip, color, T_millis):
-    
-    for i in range(0,T_millis,10):
-        index = 1- exp(-i/T_millis)
+    for i in range(0, T_millis, 10):
+        index = 1 - exp(-i / T_millis)
         index_led = round(index * float(strip.numPixels()))
         for j in range(0, index_led):
             strip.setPixelColor(j, color)
-        for j in range(index_led,strip.numPixels()):
-            strip.setPixelColor(j, Color(0,0,0))
+        for j in range(index_led, strip.numPixels()):
+            strip.setPixelColor(j, Color(0, 0, 0))
         time.sleep(0.01)
         strip.show()
 
@@ -50,12 +48,12 @@ if __name__ == '__main__':
 
     # Initialize the library (must be called once before other functions).
     strip.begin()
-    while():
-        #for temp in range(1000, 40000, 10):
-         #   color_wipe(strip, temp2rgb(temp, 20), 5)
-        for time in range(200,2000, 100):
-            firstOrderResponse(strip,Color(80,100,80),time)
-            firstOrderResponse(strip,Color(0,0,0),time)
+    while True:
+        # for temp in range(1000, 40000, 10):
+        #   color_wipe(strip, temp2rgb(temp, 20), 5)
+        for duration in range(200, 2000, 100):
+            firstOrderResponse(strip, Color(80, 100, 80), duration)
+            firstOrderResponse(strip, Color(0, 0, 0), duration)
 
 """     void LEDStrip::temperature(float temperature)
 {
