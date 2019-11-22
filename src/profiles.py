@@ -1,4 +1,3 @@
-import sys
 from math import log
 
 try:
@@ -6,8 +5,9 @@ try:
 except ModuleNotFoundError:
     from rpi_ws281x_mock import PixelStrip, Color
 
+
 def temp2rgb(temp, brightness=100.0):
-    temperature = float(temp)/100.0
+    temperature = float(temp) / 100.0
     # red
     if temperature < 66:
         red = 254.0
@@ -25,12 +25,13 @@ def temp2rgb(temp, brightness=100.0):
         blue = 254
     else:
         if temperature <= 19:
-            blue = 0;
+            blue = 0
         else:
-            blue = (138.5177312231 * log(temperature) - 305.0447927307);
-    red *= float(brightness)/100
-    green *= float(brightness)/100
-    blue *= float(brightness)/100
-    print(str(green) + " " + str(red) + " "+ str(blue))
-    return Color(int(round(green)), int(round(red)), int(round(blue)))
+            blue = (138.5177312231 * log(temperature) - 305.0447927307)
 
+    red *= float(brightness) / 100
+    green *= float(brightness) / 100
+    blue *= float(brightness) / 100
+    print(str(green) + " " + str(red) + " " + str(blue))
+
+    return Color(int(round(green)), int(round(red)), int(round(blue)))
