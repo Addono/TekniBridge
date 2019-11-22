@@ -51,6 +51,8 @@ run:
         
     - sudo systemctl daemon-reload
     - sudo systemctl restart led_strip
+  tags:
+    - production
 #  artifacts:
 #    paths:
 #      - dist/*.whl
