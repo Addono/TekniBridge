@@ -35,5 +35,6 @@ run:
     # Reload the daemon and restart
     - sudo systemctl daemon-reload
     - sudo systemctl restart led_strip
+    - systemctl is-active --quiet led_strip
   tags:
     - production
