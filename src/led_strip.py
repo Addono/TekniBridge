@@ -36,7 +36,7 @@ if __name__ == '__main__':
     strip.begin()
 
     for temp in range(1000, 40000, 1000):
-        colorWipe(strip, temp2rgb(temp, 50.0))
+        colorWipe(strip, temp2rgb(temp, 10.0))
 
 """     void LEDStrip::temperature(float temperature)
 {
