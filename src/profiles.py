@@ -1,6 +1,10 @@
-
+import sys
 from math import log
-from rpi_ws281x import PixelStrip, Color
+
+try:
+    from rpi_ws281x import PixelStrip, Color
+except ModuleNotFoundError:
+    from rpi_ws281x_mock import PixelStrip, Color
 
 def temp2rgb(temp, brightness=100.0):
     temperature = float(temp)/100.0

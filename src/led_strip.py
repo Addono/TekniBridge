@@ -1,6 +1,10 @@
 import time
 from profiles import temp2rgb
-from rpi_ws281x import PixelStrip, Color
+
+try:
+    from rpi_ws281x import PixelStrip, Color
+except ModuleNotFoundError:
+    from rpi_ws281x_mock import PixelStrip, Color
 
 # LED strip configuration:
 LED_COUNT = 250        # Number of LED pixels.
