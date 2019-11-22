@@ -20,11 +20,11 @@ cache:
 
 before_script:
   - python -V  # Print out python version for debugging
-  - apt-get install python-pip -y
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-  - pip install -r requirements.txt
+  #- apt-get install python-pip -y
+  #- pip install virtualenv
+  #- virtualenv venv
+  #- source venv/bin/activate
+  #- pip install -r requirements.txt
 
 #test:
 #  script:
