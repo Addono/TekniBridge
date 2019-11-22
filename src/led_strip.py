@@ -29,7 +29,7 @@ if __name__ == '__main__':
     # Intialize the library (must be called once before other functions).
     strip.begin()
     for temp in range(1000,40000,1000):
-        colorWipe(strip, temp2rgb(temp))
+        colorWipe(strip, temp2rgb(temp,50.0))
 
 
 
