@@ -50,7 +50,7 @@ if __name__ == '__main__':
     strip.begin()
 
     while True:
-        for temp in range(1000, 40000, 10):
+        for temp in range(1000, 40000, 100):
             color_wipe(strip, temp2rgb(temp, 20), 5)
         #for duration in range(200, 1000, 50):
         #    firstOrderResponse(strip, Color(60, 120, 60), duration)
