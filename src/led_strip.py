@@ -53,9 +53,9 @@ if __name__ == '__main__':
     while():
         #for temp in range(1000, 40000, 10):
          #   color_wipe(strip, temp2rgb(temp, 20), 5)
-        for time in range(200,2000, 100):
-            firstOrderResponse(strip,Color(80,100,80),time)
-            firstOrderResponse(strip,Color(0,0,0),time)
+        for t in range(200,2000, 100):
+            firstOrderResponse(strip,Color(80,100,80),t)
+            firstOrderResponse(strip,Color(0,0,0),t)
 
 """     void LEDStrip::temperature(float temperature)
 {
