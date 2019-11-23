@@ -48,10 +48,14 @@ class LedStrip:
             self.color_wipe(self.temp2rgb(30000, 50), 5)
         elif profile == "OFF":
             self.color_wipe(Color(0, 0, 0), 5)
+        elif profile == "WarmStep":
+            self.first_order_response(self.temp2rgb(1000, 50),500)
+        elif profile == "ColdStep":
+            self.first_order_response(self.temp2rgb(30000, 50), 500)
 
-    def first_order_response(self, color, T_millis):
-        for i in range(0, T_millis, 10):
-            index = 1 - exp(-float(i) / float(T_millis / 5))
+    def first_order_response(self, color, t_millis):
+        for i in range(0, t_millis, 10):
+            index = 1 - exp(-float(i) / float(t_millis / 5))
             index_led = int(round(index * float(LED_COUNT)))
             for j in range(0, index_led):
                 self.pixel_strip.setPixelColor(j, color)
