@@ -49,6 +49,9 @@ class _LED_Data(object):
             self.data[pos] = value
             return value
 
+    def __str__(self) -> str:
+        return "".join(str(v and 1 or "-") for v in self.data)
+
 
 class PixelStrip(object):
     def __init__(self, num, pin, freq_hz=800000, dma=10, invert=False,
@@ -63,6 +66,7 @@ class PixelStrip(object):
         """
         # Grab the led data array.
         self._led_data = _LED_Data(num)
+        self._length = num
 
         # Set a has inited flag
         self._is_initialized = False
@@ -127,7 +131,7 @@ class PixelStrip(object):
         """Return the number of pixels in the display."""
         assert self._is_initialized
 
-        return 100
+        return self._length
 
     def getPixelColor(self, n):
         """Get the 24-bit RGB color value for the LED at position n."""

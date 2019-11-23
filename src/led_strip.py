@@ -1,3 +1,4 @@
+import os
 import time
 
 from profiles import temp2rgb
@@ -7,7 +8,12 @@ from math import exp
 try:
     from rpi_ws281x import PixelStrip, Color
 except ModuleNotFoundError:
-    from rpi_ws281x_mock import PixelStrip, Color
+    from rpi_ws281x_mock import Color
+
+    if os.environ.get('SIMULATE', False):
+        from rpi_ws281x_mock import VisualPixelStrip as PixelStrip
+    else:
+        from rpi_ws281x_mock import PixelStrip
 
 # LED strip configuration:
 LED_COUNT = 250  # Number of LED pixels.
@@ -59,7 +65,9 @@ if __name__ == '__main__':
     strip.begin()
 
     while True:
-        color_wipe(strip, Color(200, 100, 100), 5)
+        for green in (50, 70, 100, 70):
+            color = Color(255, green, 0)
+            color_wipe(strip, color, 5)
 
 """     void LEDStrip::temperature(float temperature)
 {
