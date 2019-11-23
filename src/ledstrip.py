@@ -32,7 +32,8 @@ class LedStrip:
         self.pixel_strip.begin()
 
     def set_brightness(self, brightness, timestep = 5):
-        for i in range(self.pixel_strip.getBrightness(),brightness):
+        io = self.pixel_strip.getBrightness()
+        for i in range(io,brightness):
             self.pixel_strip.setBrightness(i)
             self.pixel_strip.show()
             time.sleep(timestep/1000)
