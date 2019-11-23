@@ -33,7 +33,7 @@ class LedStrip:
 
     def set_brightness(self, brightness, timestep = 5):
         io = self.pixel_strip.getBrightness()
-        for i in range(io,brightness):
+        for i in range(io, brightness, 1 if brightness > io else -1):
             self.pixel_strip.setBrightness(i)
             self.pixel_strip.show()
             time.sleep(timestep/1000)
@@ -49,7 +49,6 @@ class LedStrip:
             time.sleep(wait_ms / 1000.0)
 
     def set_profile(self, profile):
-
         """
         :type profile: str
         """
