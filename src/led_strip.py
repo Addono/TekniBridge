@@ -1,9 +1,8 @@
 import os
 import time
+from math import exp
 
 from profiles import temp2rgb
-
-from math import exp
 
 try:
     from rpi_ws281x import PixelStrip, Color

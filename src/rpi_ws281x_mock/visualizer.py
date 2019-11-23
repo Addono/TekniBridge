@@ -10,7 +10,6 @@ class VisualPixelStrip(PixelStrip):
 
         self.window = pyglet.window.Window(1200, 20)
 
-
     def show(self):
         super().show()
 
