@@ -33,6 +33,7 @@ class LedStrip:
 
     def set_brightness(self, brightness, timestep = 5):
         io = self.pixel_strip.getBrightness()
+
         for i in range(io, brightness, 1 if brightness > io else -1):
             self.pixel_strip.setBrightness(i)
             self.pixel_strip.show()
@@ -58,8 +59,7 @@ class LedStrip:
         elif profile == "COLD":
             self.color_wipe(self.temp2rgb(30000), 5)
         elif profile == "OFF":
-            self.brightness = 0
-            self.color_wipe(Color(0, 0, 0), 5)
+            self.set_brightness(0)
         elif profile == "WARMSTEP":
             self.first_order_response(self.temp2rgb(1000),500)
         elif profile == "COLDSTEP":
