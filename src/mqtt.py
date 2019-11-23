@@ -17,7 +17,7 @@ def on_connect (client, userdata, flags, rc):
     # With Paho, always subscribe at on_connect (if you want to
     # subscribe) to ensure you resubscribe if connection is
     # lost.
-    client.subscribe("/profile")
+    client.subscribe("some/profile")
 
     if rc == 0:
         client.connected_flag = True
@@ -31,7 +31,7 @@ def on_connect (client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     """ Callback called for every PUBLISH received """
-    print ("%s => %s" % (msg.topi, str(msg.payload)))
+    #print ("%s => %s" % (msg.topi, str(msg.payload)))
     #if msg.topi =="led_strip/profile":
     led_strip.setProfile(msg.payload)
         
