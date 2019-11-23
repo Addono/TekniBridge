@@ -30,8 +30,10 @@ class VisualPixelStrip(PixelStrip):
             g = (self._led_data[i] >> 8) & 0xff
             b = self._led_data[i] & 0xff
 
+            color = list(int((c * self.brightness) / 255) for c in (r, g, b))
+
             verts += [x1, y1, x2, y1, x2, y2, x1, y2]
-            colors += [r, g, b] * 4
+            colors += color * 4
 
         pyglet.graphics.draw(n * 4, pyglet.gl.GL_QUADS, ('v2i', verts), ('c3B', bytes(colors)))
 
