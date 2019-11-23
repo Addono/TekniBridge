@@ -31,6 +31,13 @@ def color_wipe(strip, color, wait_ms=50):
         strip.show()
         time.sleep(wait_ms / 1000.0)
 
+def setProfile(profile):
+    if profile == "Warm":
+        color_wipe(strip,temp2rgb(1000, 20), 5)
+    elif profile == "Cold":
+        color_wipe(strip,temp2rgb(30000, 20), 5)
+    elif profile == "OFF":
+        color_wipe(strip,Color(0,0,0),5)
 
 def firstOrderResponse(strip, color, T_millis):
     for i in range(0, T_millis, 10):
