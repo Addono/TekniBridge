@@ -12,10 +12,8 @@ run:
     # numpy is installed using aptitude, as it times out using pip
     - apt-get install python-pip python3-numpy -y
     # First try to load the current venv, otherwise install a new one
-    - (source $INSTALL_DIR/venv/bin/activate)
-      || (pip install virtualenv && virtualenv $INSTALL_DIR/venv && source $INSTALL_DIR/venv/bin/activate)
-    # Install all dependencies
-    - pip install -r requirements-prod.txt -r requirements.txt
+    - ($INSTALL_DIR/venv/bin/python -m pip install -r requirements-prod.txt -r requirements.txt)
+      || (pip install virtualenv && virtualenv $INSTALL_DIR/venv && $INSTALL_DIR/venv/bin/python -m pip install -r requirements-prod.txt -r requirements.txt)
     # Copy the source code
     - sudo cp -r . $INSTALL_DIR
     # Update the service
