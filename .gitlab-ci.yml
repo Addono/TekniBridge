@@ -29,7 +29,7 @@ run:
             [Service]
             Type=simple
             Restart=on-failure
-            ExecStart=/usr/bin/led_strip/venv/bin/python $INSTALL_DIR/src/led_strip.py
+            ExecStart=/usr/bin/led_strip/venv/bin/python $INSTALL_DIR/src/cli.py
             StandardInput=tty-force
 
             [Install]
