@@ -42,16 +42,22 @@ class LedStrip:
             time.sleep(wait_ms / 1000.0)
 
     def set_profile(self, profile):
-        if profile == "Warm":
+        """
+        :type profile: str
+        """
+        profile = profile.upper()  # Standardize everything to upper case.
+        if profile == "WARM":
             self.color_wipe(self.temp2rgb(1000, 50), 5)
-        elif profile == "Cold":
+        elif profile == "COLD":
             self.color_wipe(self.temp2rgb(30000, 50), 5)
         elif profile == "OFF":
             self.color_wipe(Color(0, 0, 0), 5)
-        elif profile == "WarmStep":
+        elif profile == "WARMSTEP":
             self.first_order_response(self.temp2rgb(1000, 50),500)
-        elif profile == "ColdStep":
+        elif profile == "COLDSTEP":
             self.first_order_response(self.temp2rgb(30000, 50), 500)
+        else:
+            print("Profile %s not found" % profile)
 
     def first_order_response(self, color, t_millis):
         for i in range(0, t_millis, 10):
