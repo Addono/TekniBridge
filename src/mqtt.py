@@ -1,3 +1,4 @@
+import random
 import sys
 import time
 
@@ -5,26 +6,19 @@ import paho.mqtt.client as mqtt
 from ledstrip import LedStrip
 
 class MqttListener:
-    def __init__(self,led_strip):
+    def __init__(self, led_strip):
         """
-
         :type led_strip: LedStrip
         """
         self.led_strip = led_strip
 
-        self.host = "node02.myqtthub.com"
+        self.host = "test.mosquitto.org"
         self.port = 1883
-        clean_session = True
-        client_id = "raspi"
-        user_name = "raspi"
-        password = "bigboy"
+        client_id = "tek-" + str(random.randint(0, 1000000))
 
-        self.client = mqtt.Client(client_id=client_id, clean_session=clean_session)
-        self.client.username_pw_set(user_name, password)
-        # connect using standard unsecure MQTT with keepalive to 60
+        self.client = mqtt.Client(client_id=client_id, clean_session=True)
 
         self.client.connected_flag = False
-
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
 
@@ -35,16 +29,15 @@ class MqttListener:
             self.client.loop()
             time.sleep(1)
         print("mqtt connected")
-        # publish message (optionally configuring qos=1, qos=2 and retain=True/False)
-        ret = self.client.publish("some/message/to/publish", "{'status' : 'on'}")
-        self.client.subscribe("some/profile")
+
+        self.client.subscribe("tek/staging/light/1/state")
         print("subscribed")
+
         self.client.loop_forever()
 
-
-
     def __del__(self):
-        self.client.disconnect()
+        if self.client:
+            self.client.disconnect()
 
     def on_connect(self, client, userdata, flags, rc):
         """ Callback called when connection/reconnection is detected """
@@ -63,6 +56,7 @@ class MqttListener:
         """ Callback called for every PUBLISH received """
         print("Message received")
         print(msg.payload.decode())
+
         self.led_strip.set_profile(msg.payload.decode())
         print("%s => %s" % (msg.topi, msg.payload.decode()))
         # if msg.topi =="led_strip/profile":
