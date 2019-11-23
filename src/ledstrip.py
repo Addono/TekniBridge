@@ -31,9 +31,11 @@ class LedStrip:
         self.pixel_strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
         self.pixel_strip.begin()
 
-    def set_brightness(self, brightness):
-        self.pixel_strip.setBrightness(brightness)
-        self.pixel_strip.show()
+    def set_brightness(self, brightness, timestep = 5):
+        for i in range(self.pixel_strip.getBrightness(),brightness):
+            self.pixel_strip.setBrightness(i)
+            self.pixel_strip.show()
+            time.sleep(timestep/1000)
 
     # Define functions which animate LEDs in various ways.
     def color_wipe(self, color, wait_ms=50):
