@@ -1,19 +1,22 @@
-import paho.mqtt.client as mqtt
+import sys
 import time
-import ssl
+
+import paho.mqtt.client as mqtt
+
 import led_strip
 
-host          = "node02.myqtthub.com"
-port          = 1883
+host = "node02.myqtthub.com"
+port = 1883
 clean_session = True
-client_id     = "raspi"
-user_name     = "raspi"
-password      = "bigboy"
+client_id = "raspi"
+user_name = "raspi"
+password = "bigboy"
 
-def on_connect (client, userdata, flags, rc):
+
+def on_connect(client, userdata, flags, rc):
     """ Callback called when connection/reconnection is detected """
-    print ("Connect %s result is: %s" % (host, rc))
-    
+    print("Connect %s result is: %s" % (host, rc))
+
     # With Paho, always subscribe at on_connect (if you want to
     # subscribe) to ensure you resubscribe if connection is
     # lost.
@@ -21,26 +24,24 @@ def on_connect (client, userdata, flags, rc):
 
     if rc == 0:
         client.connected_flag = True
-        print ("connected OK")
+        print("connected OK")
         return
-    
-    print ("Failed to connect to %s, error was, rc=%s" % rc)
+
+    print("Failed to connect to %s, error was, rc=%s" % rc)
     # handle error here
-    sys.exit (-1)
+    sys.exit(-1)
 
 
 def on_message(client, userdata, msg):
     """ Callback called for every PUBLISH received """
-    #print ("%s => %s" % (msg.topi, str(msg.payload)))
-    #if msg.topi =="led_strip/profile":
+    # print ("%s => %s" % (msg.topi, str(msg.payload)))
+    # if msg.topi =="led_strip/profile":
     led_strip.setProfile(msg.payload)
-        
 
-    
 
 # Define clientId, host, user and password
-client = mqtt.Client (client_id = client_id, clean_session = clean_session)
-client.username_pw_set (user_name, password)
+client = mqtt.Client(client_id=client_id, clean_session=clean_session)
+client.username_pw_set(user_name, password)
 
 client.on_connect = on_connect
 client.on_message = on_message
@@ -51,17 +52,17 @@ client.on_message = on_message
 # port = 8883
 
 # connect using standard unsecure MQTT with keepalive to 60
-client.connect (host, port, keepalive = 60)
+client.connect(host, port, keepalive=60)
 client.connected_flag = False
-while not client.connected_flag:           #wait in loop
+while not client.connected_flag:  # wait in loop
     client.loop()
-    time.sleep (1)
+    time.sleep(1)
 
 # publish message (optionally configuring qos=1, qos=2 and retain=True/False)
-ret = client.publish ("some/message/to/publish", "{'status' : 'on'}")
-client.loop ()
+ret = client.publish("some/message/to/publish", "{'status' : 'on'}")
+client.loop()
 
-print ("Publish operation finished with ret=%s" % ret)
+print("Publish operation finished with ret=%s" % ret)
 
 # close connection
-client.disconnect ()
+client.disconnect()
