@@ -31,6 +31,7 @@ class MqttListener:
         print("mqtt connected")
 
         self.client.subscribe("tek/staging/light/1/state")
+        self.client.subscribe("tek/staging/light/1/brightness")
         print("subscribed")
 
         self.client.loop_forever()
@@ -56,9 +57,13 @@ class MqttListener:
         """ Callback called for every PUBLISH received """
         print("Message received")
         print(msg.payload.decode())
-
-        self.led_strip.set_profile(msg.payload.decode())
-        print("%s => %s" % (msg.topi, msg.payload.decode()))
-        # if msg.topi =="led_strip/profile":
-
+        print(msg.topic)
+        if msg.topic == "tek/staging/light/1/state":
+            self.led_strip.set_profile(msg.payload.decode())
+            print("Topic %s matched" % msg.topic)
+        elif msg.topic == "tek/staging/light/1/brightness":
+            self.led_strip.set_brightness(int(msg.payload.decode()))
+            print("Topic %s  matched" % msg.topic)
+        else:
+            print("Topic %s not matched"%msg.topic)
 

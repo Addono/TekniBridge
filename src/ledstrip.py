@@ -31,6 +31,10 @@ class LedStrip:
         self.pixel_strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
         self.pixel_strip.begin()
 
+    def set_brightness(self, brightness):
+        self.pixel_strip.setBrightness(brightness)
+        self.pixel_strip.show()
+
     # Define functions which animate LEDs in various ways.
     def color_wipe(self, color, wait_ms=50):
         """Wipe color across display a pixel at a time."""
@@ -42,22 +46,25 @@ class LedStrip:
             time.sleep(wait_ms / 1000.0)
 
     def set_profile(self, profile):
+
         """
         :type profile: str
         """
         profile = profile.upper()  # Standardize everything to upper case.
         if profile == "WARM":
-            self.color_wipe(self.temp2rgb(1000, 50), 5)
+                self.color_wipe(self.temp2rgb(1000), 5)
         elif profile == "COLD":
-            self.color_wipe(self.temp2rgb(30000, 50), 5)
+            self.color_wipe(self.temp2rgb(30000), 5)
         elif profile == "OFF":
+            self.brightness = 0
             self.color_wipe(Color(0, 0, 0), 5)
         elif profile == "WARMSTEP":
-            self.first_order_response(self.temp2rgb(1000, 50),500)
+            self.first_order_response(self.temp2rgb(1000),500)
         elif profile == "COLDSTEP":
-            self.first_order_response(self.temp2rgb(30000, 50), 500)
+            self.first_order_response(self.temp2rgb(30000), 500)
         else:
             print("Profile %s not found" % profile)
+
 
     def first_order_response(self, color, t_millis):
         for i in range(0, t_millis, 10):
