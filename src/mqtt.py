@@ -17,7 +17,7 @@ def on_connect (client, userdata, flags, rc):
     # With Paho, always subscribe at on_connect (if you want to
     # subscribe) to ensure you resubscribe if connection is
     # lost.
-    client.subscribe("led_strip/profile")
+    client.subscribe("profile")
 
     if rc == 0:
         client.connected_flag = True
