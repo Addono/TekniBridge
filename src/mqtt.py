@@ -10,6 +10,7 @@ class MqttListener:
         """
         :type led_strip: LedStrip
         """
+
         self.led_strip = led_strip
 
         self.host = "test.mosquitto.org"
