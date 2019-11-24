@@ -55,15 +55,16 @@ class LedStrip:
         i = start_index
         j = start_index
 
-        while i>=startLED or j<= self.pixel_strip.numPixels():
-            if i>=startLED:
+        while i>startLED or j< self.pixel_strip.numPixels():
+            if i >= startLED:
                 self.pixel_strip.setPixelColor(i, color)
                 i -= 1
-            if j<self.pixel_strip.numPixels():
+            if j < self.pixel_strip.numPixels():
                 self.pixel_strip.setPixelColor(j,color)
-                j+=1
+                j += 1
             self.pixel_strip.show()
             time.sleep(wait_ms/1000.0)
+
 
 
     def color_rand_appear(self, color, wait_ms=50):
