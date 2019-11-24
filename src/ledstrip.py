@@ -1,5 +1,6 @@
 import time
 from math import exp, log
+from random import shuffle, randint
 import os
 
 try:
@@ -42,11 +43,36 @@ class LedStrip:
         self.pixel_strip.show()
 
     # Define functions which animate LEDs in various ways.
-    def color_wipe(self, color, wait_ms=50):
+    def color_wipe(self, color, wait_ms=50,random_index = False):
         """Wipe color across display a pixel at a time."""
         for i in range(startLED):
             self.pixel_strip.setPixelColor(i, Color(0, 0, 0))
-        for i in range(startLED, self.pixel_strip.numPixels()):
+
+        if random_index:
+            start_index = randint(startLED,self.pixel_strip.numPixels())
+        else:
+            start_index = startLED
+        i = start_index
+        j = start_index
+
+        while i>=startLED or j<= self.pixel_strip.numPixels():
+            if i>=startLED:
+                self.pixel_strip.setPixelColor(i, color)
+                i -= 1
+            if j<self.pixel_strip.numPixels():
+                self.pixel_strip.setPixelColor(j,color)
+                j+=1
+            self.pixel_strip.show()
+            time.sleep(wait_ms/1000.0)
+
+
+    def color_rand_appear(self, color, wait_ms=50):
+        """Wipe color across display a pixel at a time."""
+        for i in range(startLED):
+            self.pixel_strip.setPixelColor(i, Color(0, 0, 0))
+        x = list(range(startLED, self.pixel_strip.numPixels()))
+        shuffle(x)
+        for i in x:
             self.pixel_strip.setPixelColor(i, color)
             self.pixel_strip.show()
             time.sleep(wait_ms / 1000.0)
