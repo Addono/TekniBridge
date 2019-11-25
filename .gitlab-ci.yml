@@ -35,6 +35,7 @@ run:
     # Reload the daemon and restart
     - sudo systemctl daemon-reload
     - sudo systemctl restart led_strip
+    # Check if the service didn't exit immediately
     - systemctl is-active --quiet led_strip
   only:
     - master
