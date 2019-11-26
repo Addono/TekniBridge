@@ -10,7 +10,7 @@ run:
     - python -V
     # Install dependencies in case they are not yet installed.
     # numpy is installed using aptitude, as it times out using pip
-    - apt-get install python-pip python3-numpy -y
+    - apt-get install python3 python3-pip python3-numpy -y
     # First try to load the current venv, otherwise install a new one
     - ($INSTALL_DIR/venv/bin/python -m pip install -r requirements-prod.txt -r requirements.txt)
       || (pip install virtualenv && virtualenv $INSTALL_DIR/venv && $INSTALL_DIR/venv/bin/python -m pip install -r requirements-prod.txt -r requirements.txt)
