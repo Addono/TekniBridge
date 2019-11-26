@@ -1,7 +1,4 @@
 from abc import ABCMeta, abstractmethod
-from typing import Iterable
-
-from led import Led
 
 
 class AbstractTransition:
@@ -11,6 +8,6 @@ class AbstractTransition:
     def step(self, previous):
         """
         :type previous: Iterable[Led]
-        :rtype: list(LED)
+        :rtype: Iterable[Led]
         """
         pass
