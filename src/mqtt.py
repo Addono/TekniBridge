@@ -6,7 +6,7 @@ from typing import List
 
 import paho.mqtt.client as mqtt
 from ledstrip import LedStrip
-from transitions import Sudden, Fade, AbstractTransition
+from transitions import Sudden, Fade
 
 
 class MqttListener:
@@ -60,7 +60,7 @@ class MqttListener:
         """
         Callback called for every PUBLISH received
         """
-        topic: List[str] = msg.topic.split("/")
+        topic = msg.topic.split("/")
         if len(topic) == 0:
             print("Invalid message, empty topic")
             return
