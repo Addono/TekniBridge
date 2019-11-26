@@ -26,11 +26,12 @@ class VisualPixelStrip(PixelStrip):
             y1 = 0
             y2 = h
 
+            white = (self._led_data[i] >> 24) & 0xff
             r = (self._led_data[i] >> 16) & 0xff
             g = (self._led_data[i] >> 8) & 0xff
             b = self._led_data[i] & 0xff
 
-            color = list(int((c * self.brightness) / 255) for c in (r, g, b))
+            color = list(int((c * white * self.brightness) / (255 * 255)) for c in (r, g, b))
 
             verts += [x1, y1, x2, y1, x2, y2, x1, y2]
             colors += color * 4
