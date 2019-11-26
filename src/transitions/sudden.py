@@ -3,8 +3,17 @@ from transitions import AbstractTransition
 
 
 class Sudden(AbstractTransition):
-    def __init__(self, brightness, red, green, blue):
-        self.desired_led = Led(red, green, blue, brightness)
+
+    def __init__(self, red: float, green: float, blue: float) -> None:
+        super().__init__()
+
+        self.target = Led(red, green, blue)
+
+    # @AbstractTransition.brightness.setter
+    # def brightness(self, brightness):
+    #     super(brightness)
+    #     self.target.brightness = brightness
 
     def step(self, previous):
-        return [self.desired_led] * len(previous)
+        self.target.brightness = self.brightness
+        return [self.target] * len(previous)

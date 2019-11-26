@@ -31,8 +31,8 @@ class LedStrip:
     def __init__(self):
         self.pixel_strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
         self.pixel_strip.begin()
-        self.leds = [Led() for _ in range(LED_COUNT)]
-        self.transition = Sudden(0, 0, 0, 0)
+        self.leds = [Led(1.0, 1.0, 1.0) for _ in range(LED_COUNT)]
+        self.transition = Sudden(0.0, 0.0, 0.0)
 
     def control(self):
         # Take a step
@@ -41,8 +41,8 @@ class LedStrip:
         # Update the physical LED states
         self.write_leds()
 
-    def write_leds(self, ):
+    def write_leds(self):
         for i in range(startLED, self.pixel_strip.numPixels()):
-            self.pixel_strip.setPixelColorRGB(i, *(int(c) for c in self.leds[i]))
+            self.pixel_strip.setPixelColorRGB(i, *(int(c * 255) for c in self.leds[i]))
 
         self.pixel_strip.show()

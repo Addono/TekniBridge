@@ -2,10 +2,11 @@ import json
 import random
 import sys
 import time
+from typing import List
 
 import paho.mqtt.client as mqtt
 from ledstrip import LedStrip
-from transitions import Sudden, Fade
+from transitions import Sudden, Fade, AbstractTransition
 
 
 class MqttListener:
@@ -13,16 +14,13 @@ class MqttListener:
         """
         :type led_strip: LedStrip
         """
-
         self.led_strip = led_strip
 
         self.host = "test.mosquitto.org"
         self.port = 1883
         client_id = "tek-" + str(random.randint(0, 1000000))
 
-
         self.client = mqtt.Client(client_id=client_id, clean_session=True)
-
         self.client.connected_flag = False
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
@@ -34,8 +32,8 @@ class MqttListener:
             time.sleep(1)
         print("mqtt connected")
 
-        self.client.subscribe("tek/staging/light/1/state")
-        #self.client.subscribe("tek/staging/light/1/brightness")
+        self.client.subscribe("tek/staging/light/1/#")
+        # self.client.subscribe("tek/staging/light/1/brightness")
         # self.client.subscribe("tek/staging/light/simulated")
         print("subscribed")
 
@@ -59,16 +57,31 @@ class MqttListener:
         sys.exit(-1)
 
     def on_message(self, client, userdata, msg):
-        """ Callback called for every PUBLISH received """
+        """
+        Callback called for every PUBLISH received
+        """
+        topic: List[str] = msg.topic.split("/")
+        if len(topic) == 0:
+            print("Invalid message, empty topic")
+            return
 
-        # Decode the message
-        content = msg.payload.decode()
-        print(content)
+        target = topic[-1]
 
-        # Parse the JSON
-        transition_configuration = json.loads(content)
-        params = transition_configuration["params"]
-        transition_name = transition_configuration["transition"]
+        payload = json.loads(msg.payload.decode())
+
+        if target == "state":
+            self.handle_state_message(payload)
+        elif target == "brightness":
+            self.handle_brightness_message(payload)
+        else:
+            print("Error target %s not found" % target)
+
+    def handle_brightness_message(self, payload):
+        self.led_strip.transition.brightness = payload["brightness"]
+
+    def handle_state_message(self, payload):
+        params = payload["params"]
+        transition_name = payload["transition"]
 
         if not transition_name:
             print("Something went wrong")
@@ -76,10 +89,10 @@ class MqttListener:
 
         if transition_name == "sudden":
             print("Sudden mode activated")
-            transition = Sudden(brightness=255, **params)
+            transition = Sudden(**params)
         elif transition_name == "fade":
-            transition = Fade(brightness=255, **params)
+            transition = Fade(**params)
         else:
-            transition = Sudden(100, 255, 0, 0)
+            transition = Sudden(1.0, 0.0, 0.0)
 
         self.led_strip.transition = transition
