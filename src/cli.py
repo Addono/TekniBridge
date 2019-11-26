@@ -3,7 +3,7 @@ from ledstrip import LedStrip
 
 ledstrip = LedStrip()
 while True:
-    ledstrip.set_profile("Warm")
+    ledstrip.set_profile("cold")
 mqttlistener = MqttListener(ledstrip)
 ledstrip.pixel_strip.getPixels()
 
