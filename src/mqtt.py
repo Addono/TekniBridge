@@ -1,9 +1,12 @@
+import json
 import random
 import sys
 import time
 
 import paho.mqtt.client as mqtt
 from ledstrip import LedStrip
+from transitions import Sudden, Fade
+
 
 class MqttListener:
     def __init__(self, led_strip):
@@ -17,12 +20,12 @@ class MqttListener:
         self.port = 1883
         client_id = "tek-" + str(random.randint(0, 1000000))
 
+
         self.client = mqtt.Client(client_id=client_id, clean_session=True)
 
         self.client.connected_flag = False
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
-
 
     def connect(self):
         self.client.connect(self.host, self.port, keepalive=60)
@@ -32,10 +35,11 @@ class MqttListener:
         print("mqtt connected")
 
         self.client.subscribe("tek/staging/light/1/state")
-        self.client.subscribe("tek/staging/light/1/brightness")
+        #self.client.subscribe("tek/staging/light/1/brightness")
+        # self.client.subscribe("tek/staging/light/simulated")
         print("subscribed")
 
-        self.client.loop_forever()
+        self.client.loop_start()
 
     def __del__(self):
         if self.client:
@@ -56,15 +60,26 @@ class MqttListener:
 
     def on_message(self, client, userdata, msg):
         """ Callback called for every PUBLISH received """
-        print("Message received")
-        print(msg.payload.decode())
-        print(msg.topic)
-        if msg.topic == "tek/staging/light/1/state":
-            self.led_strip.set_profile(msg.payload.decode())
-            print("Topic %s matched" % msg.topic)
-        elif msg.topic == "tek/staging/light/1/brightness":
-            self.led_strip.set_brightness(int(msg.payload.decode()))
-            print("Topic %s  matched" % msg.topic)
-        else:
-            print("Topic %s not matched"%msg.topic)
 
+        # Decode the message
+        content = msg.payload.decode()
+        print(content)
+
+        # Parse the JSON
+        transition_configuration = json.loads(content)
+        params = transition_configuration["params"]
+        transition_name = transition_configuration["transition"]
+
+        if not transition_name:
+            print("Something went wrong")
+            return
+
+        if transition_name == "sudden":
+            print("Sudden mode activated")
+            transition = Sudden(brightness=255, **params)
+        elif transition_name == "fade":
+            transition = Fade(brightness=255, **params)
+        else:
+            transition = Sudden(100, 255, 0, 0)
+
+        self.led_strip.transition = transition
