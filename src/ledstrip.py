@@ -39,6 +39,8 @@ class LedStrip:
 
     def write_leds(self):
         for i in range(startLED, self.pixel_strip.numPixels()):
-            self.pixel_strip.setPixelColorRGB(i, *(int(c * 255) for c in self.leds[i]))
+            [red, green, blue, brightness] = self.leds[i]
+            colors = (int(c * brightness * 255) for c in (red, green, blue))
+            self.pixel_strip.setPixelColorRGB(i, *colors, 255)
 
         self.pixel_strip.show()
