@@ -9,11 +9,10 @@ class Sudden(AbstractTransition):
 
         self.target = Led(red, green, blue)
 
-    # @AbstractTransition.brightness.setter
-    # def brightness(self, brightness):
-    #     super(brightness)
-    #     self.target.brightness = brightness
+    @AbstractTransition.brightness.setter
+    def brightness(self, brightness):
+        self.target.brightness = brightness
+        AbstractTransition.brightness.fset(brightness)
 
     def step(self, previous):
-        self.target.brightness = self.brightness
         return [self.target] * len(previous)

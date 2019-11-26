@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Iterable
+from typing import Iterable, Union
 
 from led import Led
 
@@ -15,10 +15,10 @@ class AbstractTransition:
         return self._brightness
 
     @brightness.setter
-    def brightness(self, brightness: float):
-        # assert 0.0 <= brightness and brightness <= 1.0
+    def brightness(self, brightness: Union[float, int]):
+        assert 0.0 <= brightness and brightness <= 1.0
 
-        self._brightness = brightness
+        self._brightness = float(brightness)
 
     @abstractmethod
     def step(self, previous):

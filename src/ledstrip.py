@@ -1,10 +1,6 @@
-import time
-from math import exp, log
-from random import shuffle, randint
 import os
 from led import Led
 from transitions.sudden import Sudden
-from transitions.fade import Fade
 
 try:
     from rpi_ws281x import PixelStrip
