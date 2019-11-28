@@ -4,7 +4,7 @@ from transitions import AbstractTransition
 
 class Fade(AbstractTransition):
 
-    def __init__(self, red: float, green: float, blue: float, rate: float = 0.003) -> None:
+    def __init__(self, red: float, green: float, blue: float, rate: float = 0.02) -> None:
         super().__init__()
 
         self.target = Led(red, green, blue)
