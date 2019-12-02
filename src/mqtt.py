@@ -18,9 +18,9 @@ class MqttListener:
 
         self.host = "test.mosquitto.org"
         self.port = 1883
-        client_id = "tek-" + str(random.randint(0, 1000000))
+        client_id = "tek-" + str(random.randint(0, 10000000))
 
-        self.client = mqtt.Client(client_id=client_id, clean_session=True)
+        self.client = mqtt.Client(client_id=client_id, clean_session=False)
         self.client.connected_flag = False
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
@@ -32,7 +32,7 @@ class MqttListener:
             time.sleep(1)
         print("mqtt connected")
 
-        self.client.subscribe("tek/staging/light/1/#")
+        self.client.subscribe("tek/staging/light/1/#", qos=1)
         # self.client.subscribe("tek/staging/light/1/brightness")
         # self.client.subscribe("tek/staging/light/simulated")
         print("subscribed")
