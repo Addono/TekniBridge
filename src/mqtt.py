@@ -2,7 +2,6 @@ import json
 import random
 import sys
 import time
-from typing import List
 
 import paho.mqtt.client as mqtt
 from ledstrip import LedStrip
