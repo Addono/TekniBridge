@@ -15,7 +15,7 @@ class MqttListener:
         """
         self.led_strip = led_strip
 
-        self.host = "broker.hivemq.com"
+        self.host = "mqtt.eclipse.org"
         self.port = 1883
         client_id = "tek-" + str(random.randint(0, 10000000))
 
