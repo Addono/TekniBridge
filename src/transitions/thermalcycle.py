@@ -138,6 +138,6 @@ class ThermalCycle(AbstractTransition):
             self.set_temp(6000)
         elif ((datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24)
               or ((datetime.datetime.now().hour >= 0 and datetime.datetime.now().hour < 4))):
-            self.set_temp(2000)
+            self.set_temp(1500)
 
         return [led.blend(self.target, self.rate) for led in previous]
