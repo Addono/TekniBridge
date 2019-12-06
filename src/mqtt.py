@@ -6,7 +6,7 @@ from typing import List
 
 import paho.mqtt.client as mqtt
 from ledstrip import LedStrip
-from transitions import Sudden, Fade
+from transitions import Sudden, Fade, Thermal_cycle
 
 
 class MqttListener:
@@ -92,6 +92,8 @@ class MqttListener:
             transition = Sudden(**params)
         elif transition_name == "fade":
             transition = Fade(**params)
+        elif transition_name == "thermalCycle":
+            transition = Thermal_cycle()
         else:
             transition = Sudden(1.0, 0.0, 0.0)
 
