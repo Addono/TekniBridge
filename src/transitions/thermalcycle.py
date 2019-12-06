@@ -3,7 +3,7 @@ from transitions import AbstractTransition
 import datetime
 
 
-class Thermal_cycle(AbstractTransition):
+class ThermalCycle(AbstractTransition):
     def __init__(self, rate: float = 0.02) -> None:
         super().__init__()
         self.rate = rate
