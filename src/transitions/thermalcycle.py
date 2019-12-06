@@ -2,6 +2,7 @@ from led import Led
 from transitions import AbstractTransition
 import datetime
 
+
 class Thermal_cycle(AbstractTransition):
     def __init__(self, rate: float = 0.02) -> None:
         super().__init__()
@@ -125,19 +126,18 @@ class Thermal_cycle(AbstractTransition):
         self.target.brightness = brightness
         AbstractTransition.brightness.fset(brightness)
 
-    def set_temp(self,temperature: int):
-        temperature = max(1000, min( 12000, temperature - temperature % 100 ) )
-        [r,g,b] = self.kelvin_table[temperature]
-        self.target = Led(r/255.0, g/255.0, b/255.0, self.brightness)
+    def set_temp(self, temperature: int):
+        temperature = max(1000, min(12000, temperature - temperature % 100))
+        [r, g, b] = self.kelvin_table[temperature]
+        self.target = Led(r / 255.0, g / 255.0, b / 255.0, self.brightness)
 
     def step(self, previous):
-        if(datetime.datetime.now().hour>= 7 and datetime.datetime.now().hour<15):
+        if (datetime.datetime.now().hour >= 7 and datetime.datetime.now().hour < 15):
             self.set_temp(8000)
-        elif(datetime.datetime.now().hour>=15  and datetime.datetime.now().hour<18):
+        elif (datetime.datetime.now().hour >= 15 and datetime.datetime.now().hour < 18):
             self.set_temp(6000)
-        elif((datetime.datetime.now().hour>=18  and datetime.datetime.now().hour<24)
-             or ((datetime.datetime.now().hour>=0  and datetime.datetime.now().hour<4))):
+        elif ((datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24)
+              or ((datetime.datetime.now().hour >= 0 and datetime.datetime.now().hour < 4))):
             self.set_temp(2000)
-
 
         return [led.blend(self.target, self.rate) for led in previous]

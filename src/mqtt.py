@@ -2,7 +2,6 @@ import json
 import random
 import sys
 import time
-from typing import List
 
 import paho.mqtt.client as mqtt
 from ledstrip import LedStrip
@@ -16,7 +15,7 @@ class MqttListener:
         """
         self.led_strip = led_strip
 
-        self.host = "test.mosquitto.org"
+        self.host = "mqtt.eclipse.org"
         self.port = 1883
         client_id = "tek-" + str(random.randint(0, 10000000))
 
