@@ -8,6 +8,10 @@ from bridges import AbstractLight
 
 class Yeelight(AbstractLight):
     def __init__(self, ip: str, supports: List[str]) -> None:
+        """
+        @type ip: The ip of the light bulb
+        @type supports: A list of all methods this light bulb supports
+        """
         super().__init__(1)
 
         self.bulb = Bulb(ip)

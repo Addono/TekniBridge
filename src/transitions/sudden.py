@@ -12,7 +12,7 @@ class Sudden(AbstractTransition):
     @AbstractTransition.brightness.setter
     def brightness(self, brightness):
         self.target.brightness = brightness
-        AbstractTransition.brightness.fset(brightness)
+        AbstractTransition.brightness.fset(self, brightness)
 
     def step(self, previous):
-        return [self.target] * len(previous)
+        return [self.target for _ in previous]

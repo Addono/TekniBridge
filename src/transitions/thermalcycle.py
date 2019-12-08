@@ -128,7 +128,7 @@ class ThermalCycle(AbstractTransition):
     @AbstractTransition.brightness.setter
     def brightness(self, brightness):
         self.target.brightness = brightness
-        AbstractTransition.brightness.fset(brightness)
+        AbstractTransition.brightness.fset(self, brightness)
 
     def set_temp(self, temperature: int):
         temperature = max(1000, min(12000, temperature - temperature % 100))
@@ -143,5 +143,9 @@ class ThermalCycle(AbstractTransition):
         elif (18 <= datetime.datetime.now().hour < 24
               or 0 <= datetime.datetime.now().hour < 4):
             self.set_temp(1500)
+
+        # print(self.target)
+        #
+        # print([led.blend(self.target, self.rate) for led in previous][50])
 
         return [led.blend(self.target, self.rate) for led in previous]
