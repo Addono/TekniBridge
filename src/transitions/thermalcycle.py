@@ -136,12 +136,12 @@ class ThermalCycle(AbstractTransition):
         self.target = Led(r / 255.0, g / 255.0, b / 255.0, self.brightness)
 
     def step(self, previous):
-        if (datetime.datetime.now().hour >= 7 and datetime.datetime.now().hour < 15):
+        if 7 <= datetime.datetime.now().hour < 15:
             self.set_temp(8000)
-        elif (datetime.datetime.now().hour >= 15 and datetime.datetime.now().hour < 18):
+        elif 15 <= datetime.datetime.now().hour < 18:
             self.set_temp(6000)
-        elif ((datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24)
-              or ((datetime.datetime.now().hour >= 0 and datetime.datetime.now().hour < 4))):
+        elif (18 <= datetime.datetime.now().hour < 24
+              or 0 <= datetime.datetime.now().hour < 4):
             self.set_temp(1500)
 
         return [led.blend(self.target, self.rate) for led in previous]

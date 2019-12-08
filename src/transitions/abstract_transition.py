@@ -16,7 +16,7 @@ class AbstractTransition:
 
     @brightness.setter
     def brightness(self, brightness: Union[float, int]):
-        assert 0.0 <= brightness and brightness <= 1.0
+        assert 0.0 <= brightness <= 1.0
 
         self._brightness = float(brightness)
 
