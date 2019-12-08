@@ -1,24 +1,16 @@
-from led import Led
-from transitions import AbstractTransition
+from transitions import Fade
 
 
-class Wipe(AbstractTransition):
+class Wipe(Fade):
 
-    def __init__(self, red: float, green: float, blue: float, rate: float = 0.9) -> None:
-        super().__init__()
+    def __init__(self, red: float, green: float, blue: float, rate: float = 0.02) -> None:
+        super().__init__(red, green, blue, rate)
+
         self.index = 0
-        self.target = Led(red, green, blue)
-        self.rate = rate
-
-    @AbstractTransition.brightness.setter
-    def brightness(self, brightness):
-        self.target.brightness = brightness
-        AbstractTransition.brightness.fset(brightness)
 
     def step(self, previous):
-
-        previous[self.index] = previous[self.index].blend(self.target, self.rate)
-        if previous[self.index].similar(self.target) and self.index < len(previous)-1:
-            previous[self.index] = self.target
+        if (self.index < len(previous)):
             self.index += 1
-        return previous
+
+        # Fade everything below index, freeze everything above it
+        return super().step(previous[:self.index]) + previous[self.index:]
