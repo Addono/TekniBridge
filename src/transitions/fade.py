@@ -13,7 +13,7 @@ class Fade(AbstractTransition):
     @AbstractTransition.brightness.setter
     def brightness(self, brightness):
         self.target.brightness = brightness
-        AbstractTransition.brightness.fset(brightness)
+        AbstractTransition.brightness.fset(self, brightness)
 
     def step(self, previous):
         return [led.blend(self.target, self.rate) for led in previous]

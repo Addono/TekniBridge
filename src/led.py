@@ -1,6 +1,6 @@
 class Led:
 
-    def __init__(self, red: float, green: float, blue: float, brightness: float=1.0):
+    def __init__(self, red: float, green: float, blue: float, brightness: float = 1.0):
         super().__init__()
 
         self.red = red
@@ -23,6 +23,8 @@ class Led:
         return (abs(self.red - other.red) < disparity and abs(self.green - other.green)< disparity and
                 abs(self.blue - other.blue) < disparity and abs(self.brightness - other.brightness)< disparity)
 
+    def __str__(self) -> str:
+        return "|".join(map(lambda x: str(round(x * 100)), [self.red, self.green, self.blue, self.brightness]))
 
     def scale(self, alpha: float):
         scaled_values = (alpha * v for v in self)

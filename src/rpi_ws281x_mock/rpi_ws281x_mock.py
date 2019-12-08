@@ -89,7 +89,6 @@ class PixelStrip(object):
         """Update the display with the data from the LED buffer."""
         assert self._is_initialized
 
-
     def setPixelColor(self, n, color):
         """Set LED at position n to the provided 24-bit color value (in RGB order).
         """
@@ -142,7 +141,8 @@ class PixelStrip(object):
     def getPixelColorRGB(self, n):
         assert self._is_initialized
 
-        c = lambda: None
+        def c():
+            return None
 
         setattr(c, 'r', self._led_data[n] >> 16 & 0xff)
         setattr(c, 'g', self._led_data[n] >> 8 & 0xff)
