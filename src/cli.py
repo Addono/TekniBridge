@@ -1,11 +1,18 @@
-from bridges import RpiWs281xLedstrip
+from yeelight import discover_bulbs
+
+from bridges import RpiWs281xLedstrip, Yeelight
 from mqtt import MqttListener
 
+bulbs = discover_bulbs(timeout=10)
 
-ledstrip = RpiWs281xLedstrip()
+lights = [
+    RpiWs281xLedstrip(),
+    *(Yeelight.from_discover_bulbs_dict(bulb) for bulb in bulbs),
+]
 
-mqttlistener = MqttListener([ledstrip])
+mqttlistener = MqttListener(lights)
 mqttlistener.connect()
 
 while True:
-    ledstrip.control()
+    for light in lights:
+        light.control()
