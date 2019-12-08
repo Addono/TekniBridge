@@ -15,11 +15,11 @@ class Yeelight(AbstractLight):
         self.bulb.duration = 1000
         self.bulb.turn_on()
 
-        self.supports: List[str] = supports
+        self.supports = supports
 
-        self.previous_rgb: List[int] = [0, 0, 0]
-        self.previous_brightness: int = 0
-        self.previous_message: int = 0  # Tracks the last time we send a message, used for rate limiting
+        self.previous_rgb = [0, 0, 0]
+        self.previous_brightness = 0
+        self.previous_message = 0  # Tracks the last time we send a message, used for rate limiting
 
     def write(self):
         now = time.time()
