@@ -5,7 +5,8 @@ import time
 
 import paho.mqtt.client as mqtt
 from ledstrip import LedStrip
-from transitions import Sudden, Fade, ThermalCycle
+from transitions import Sudden, Fade, ThermalCycle, Wipe
+
 
 
 class MqttListener:
@@ -95,6 +96,8 @@ class MqttListener:
         elif transition_name == "thermalCycle":
             print("Thermal cycle mode activated")
             transition = ThermalCycle()
+        elif transition_name == "wipe":
+            transition = Wipe(**params)
         else:
             transition = Sudden(1.0, 0.0, 0.0)
 
