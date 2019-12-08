@@ -2,18 +2,17 @@ import json
 import random
 import sys
 import time
+from typing import List
 
 import paho.mqtt.client as mqtt
-from ledstrip import LedStrip
+
+from bridges import AbstractLight
 from transitions import Sudden, Fade, ThermalCycle
 
 
 class MqttListener:
-    def __init__(self, led_strip):
-        """
-        :type led_strip: LedStrip
-        """
-        self.led_strip = led_strip
+    def __init__(self, lights: List[AbstractLight]):
+        self.lights = lights
 
         self.host = "mqtt.eclipse.org"
         self.port = 1883
@@ -32,8 +31,6 @@ class MqttListener:
         print("mqtt connected")
 
         self.client.subscribe("tek/staging/light/1/#", qos=1)
-        # self.client.subscribe("tek/staging/light/1/brightness")
-        # self.client.subscribe("tek/staging/light/simulated")
         print("subscribed")
 
         self.client.loop_start()
@@ -76,7 +73,8 @@ class MqttListener:
             print("Error target %s not found" % target)
 
     def handle_brightness_message(self, payload):
-        self.led_strip.transition.brightness = payload["brightness"]
+        for light in self.lights:
+            light.transition.brightness = payload["brightness"]
 
     def handle_state_message(self, payload):
         params = payload["params"]
@@ -98,4 +96,5 @@ class MqttListener:
         else:
             transition = Sudden(1.0, 0.0, 0.0)
 
-        self.led_strip.transition = transition
+        for light in self.lights:
+            light.transition = transition

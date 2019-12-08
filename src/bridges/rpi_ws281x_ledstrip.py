@@ -1,6 +1,6 @@
 import os
-from led import Led
-from transitions.sudden import Sudden
+
+from bridges.abstract_light import AbstractLight
 
 try:
     from rpi_ws281x import PixelStrip
@@ -23,24 +23,19 @@ LED_CHANNEL = 0  # set to '1' for GPIOs 13, 19, 41, 45 or 53
 startLED = 28
 
 
-class LedStrip:
-    def __init__(self):
+class RpiWs281xLedstrip(AbstractLight):
+
+    def __init__(self) -> None:
+        super().__init__(led_count=LED_COUNT)
         self.pixel_strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
         self.pixel_strip.begin()
-        self.leds = [Led(1.0, 1.0, 1.0) for _ in range(LED_COUNT)]
-        self.transition = Sudden(0.0, 0.0, 0.0)
 
-    def control(self):
-        # Take a step
-        self.leds = self.transition.step(previous=self.leds)
-
-        # Update the physical LED states
-        self.write_leds()
-
-    def write_leds(self):
+    def write(self):
+        # Update the value for each of the pixels in the strip
         for i in range(startLED, self.pixel_strip.numPixels()):
             [red, green, blue, brightness] = self.leds[i]
             colors = (int(c * brightness * 255) for c in (red, green, blue))
             self.pixel_strip.setPixelColorRGB(i, *colors, 255)
 
+        # Flush the new values to the strip
         self.pixel_strip.show()

@@ -1,10 +1,10 @@
+from bridges import RpiWs281xLedstrip
 from mqtt import MqttListener
-from ledstrip import LedStrip
 
 
-ledstrip = LedStrip()
+ledstrip = RpiWs281xLedstrip()
 
-mqttlistener = MqttListener(ledstrip)
+mqttlistener = MqttListener([ledstrip])
 mqttlistener.connect()
 
 while True:
