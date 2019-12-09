@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Iterable, Union
+from typing import Union, List
 
 from led import Led
 
@@ -21,9 +21,5 @@ class AbstractTransition:
         self._brightness = float(brightness)
 
     @abstractmethod
-    def step(self, previous):
-        """
-        :type previous: Iterable[Led]
-        :rtype: Iterable[Led]
-        """
+    def step(self, previous: List[Led]) -> List[Led]:
         pass

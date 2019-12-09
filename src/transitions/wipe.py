@@ -3,7 +3,7 @@ from transitions import Fade
 
 class Wipe(Fade):
 
-    def __init__(self, red: float, green: float, blue: float, rate: float = 0.02) -> None:
+    def __init__(self, red: float, green: float, blue: float, rate: float = 0.01) -> None:
         super().__init__(red, green, blue, rate)
 
         self.index = 0
