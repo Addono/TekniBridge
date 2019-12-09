@@ -4,11 +4,12 @@ import sys
 import time
 from typing import List
 
+
 import paho.mqtt.client as mqtt
 
 
 from bridges import AbstractLight
-from transitions import Sudden, Fade, ThermalCycle, Wipe
+from transitions import Sudden, Fade, ThermalCycle, Wipe, FadeArray, Christmas
 
 
 
@@ -97,6 +98,8 @@ class MqttListener:
             transition = ThermalCycle()
         elif transition_name == "wipe":
             transition = Wipe(**params)
+        elif transition_name == "christmas":
+            transition = Christmas()
         else:
             transition = Sudden(1.0, 0.0, 0.0)
 
