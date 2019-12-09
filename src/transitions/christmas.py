@@ -4,9 +4,9 @@ from led import Led
 from transitions import FadeArray
 
 CHRISTMAS_COLORS = [
-    [0.7019607843137254, 0, 0.047058823529411764],
-    [0, 0.7019607843137254, 0.17254901960784313],
-    [1.0, 0.8431372549019608, 0]
+    Led(0.7019607843137254, 0, 0.047058823529411764),
+    Led(0, 0.7019607843137254, 0.17254901960784313),
+    Led(1.0, 0.8431372549019608, 0),
 ]
 
 
@@ -16,15 +16,15 @@ class Christmas(FadeArray):
 
     def step(self, previous):
         if self.targets is None:
-            self.targets = [Led(0, 0, 0) for _ in previous]
+            self.targets = previous
 
         if self.converged(previous):
-            self.targets = [Led(*CHRISTMAS_COLORS[randint(0, 2)]) for _ in previous]
+            self.targets = [CHRISTMAS_COLORS[randint(0, 2)] for _ in previous]
 
         return super().step(previous)
 
-    def converged(self, previous):
-        for i in range(0, len(previous)):
-            if not (self.targets[i].similar(previous[i])):
+    def converged(self, previous) -> bool:
+        for target_led, previous_led in zip(self.targets, previous):
+            if not target_led.similar(previous_led):
                 return False
         return True
