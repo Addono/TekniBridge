@@ -37,7 +37,7 @@ run:
     - sudo systemctl restart teknibridge
     - sudo systemctl enable teknibridge
     # Check if the service didn't exit immediately
-    - systemctl is-active --quiet teknibridge
+    - sleep 1 && systemctl is-active --quiet teknibridge
   only:
     - master
   tags:
