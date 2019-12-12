@@ -31,9 +31,11 @@ run:
 
             [Install]
             WantedBy=multi-user.target" > /lib/systemd/system/led_strip.service
-    # Reload the daemon and restart
+    # Reload the daemon
     - sudo systemctl daemon-reload
+    # Enable and restart the service
     - sudo systemctl restart led_strip
+    - sudo systemctl enable led_strip
     # Check if the service didn't exit immediately
     - systemctl is-active --quiet led_strip
   only:
