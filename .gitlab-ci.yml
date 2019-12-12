@@ -1,5 +1,5 @@
 variables:
-  INSTALL_DIR: "/usr/bin/led_strip"
+  INSTALL_DIR: "/usr/bin/teknibridge"
 
 run:
   stage: deploy
@@ -19,25 +19,25 @@ run:
     - |
         sudo echo "
             [Unit]
-            Description=LED Strip Service
+            Description=Teknibridge Service
             After=multi-user.target
             Conflicts=getty@tty1.service
 
             [Service]
             Type=simple
             Restart=on-failure
-            ExecStart=/usr/bin/led_strip/venv/bin/python3 $INSTALL_DIR/src/cli.py
+            ExecStart=/usr/bin/teknibridge/venv/bin/python3 $INSTALL_DIR/src/cli.py
             StandardInput=tty-force
 
             [Install]
-            WantedBy=multi-user.target" > /lib/systemd/system/led_strip.service
+            WantedBy=multi-user.target" > /lib/systemd/system/teknibridge.service
     # Reload the daemon
     - sudo systemctl daemon-reload
     # Enable and restart the service
-    - sudo systemctl restart led_strip
-    - sudo systemctl enable led_strip
+    - sudo systemctl restart teknibridge
+    - sudo systemctl enable teknibridge
     # Check if the service didn't exit immediately
-    - systemctl is-active --quiet led_strip
+    - systemctl is-active --quiet teknibridge
   only:
     - master
   tags:
