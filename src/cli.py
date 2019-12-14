@@ -1,12 +1,14 @@
 import sentry_sdk
 sentry_sdk.init("https://4e23e9f9b616446582af0ce4fc3c7f53@sentry.io/1857022")
 
-from multiprocessing import Process, Queue
+from multiprocessing import Queue
+from threading import Thread
 
 from yeelight import discover_bulbs
 
 from bridges import RpiWs281xLedstrip, Yeelight
 from mqtt import MqttListener
+
 
 def discover_yeelights(lights_queue: Queue):
     # Track which ip addresses we already found
@@ -34,7 +36,7 @@ if __name__ == '__main__':
 
     # Create a new process which scans for new Yeelights asynchronously
     new_lights_queue = Queue()
-    yeelight_discoverer = Process(target=discover_yeelights, args=(new_lights_queue,))
+    yeelight_discoverer = Thread(target=discover_yeelights, args=(new_lights_queue,))
     yeelight_discoverer.start()
 
     while True:
