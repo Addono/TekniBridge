@@ -47,6 +47,8 @@ Or if you want to have the simulator enabled:
 ```bash
 SIMULATE=1 python src/cli.py
 ```
+Which will look something like this:
+![Screenrecording](./docs/img/screenrecording_visualizer.gif)
 
 ## Usage <a name = "usage"></a>
 ### Deploy to Raspberry Pi
