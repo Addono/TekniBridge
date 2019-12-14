@@ -42,12 +42,13 @@ class Yeelight(AbstractLight):
             # Only update the brightness if the difference is more than one percent
             if abs(self.previous_brightness - brightness) > 0.01:
                 # Turn the light off when brightness approaches zero and it is turned on
-                if brightness < 0.01 and self.previous_power == "on":
-                    self.bulb.turn_off()
-                    self.previous_power = "off"
-                    send_messages_count += 1
+                if brightness < 0.01:
+                    if self.previous_power == "on":
+                        self.bulb.turn_off()
+                        self.previous_power = "off"
+                        send_messages_count += 1
                 else:
-                    # Turn the light off in case it was previously turned off
+                    # Turn the light on in case it was previously turned off
                     if self.previous_power == "off":
                         self.bulb.turn_on()
                         self.previous_power = "on"
