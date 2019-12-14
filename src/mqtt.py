@@ -23,6 +23,8 @@ class MqttListener:
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
 
+        self.brightness = 0
+
     def connect(self):
         self.client.connect(self.host, self.port, keepalive=60)
         while not self.client.connected_flag:  # wait in loop
@@ -73,8 +75,10 @@ class MqttListener:
             print("Error target %s not found" % target)
 
     def handle_brightness_message(self, payload):
+        self.brightness = payload["brightness"]
+
         for light in self.lights:
-            light.transition.brightness = payload["brightness"]
+            light.transition.brightness = self.brightness
 
     def handle_state_message(self, payload):
         params = payload["params"]
@@ -85,6 +89,7 @@ class MqttListener:
             return
 
         for light in self.lights:
+            # Create and assign a new transition object to the light
             if transition_name == "sudden":
                 print("Sudden mode activated")
                 light.transition = Sudden(**params)
@@ -100,3 +105,6 @@ class MqttListener:
                 light.transition = Christmas()
             else:
                 light.transition = Sudden(1.0, 0.0, 0.0)
+
+            # Set the brightness of this new transition
+            light.transition.brightness = self.brightness
