@@ -60,9 +60,9 @@ sudo reboot now
 ```
 
 The default method of deploying to production environments is by using continious deployment, which can be found in [.gitlab-ci.yml](./.gitlab-ci.yml). To set this up:
-  1. Fork this repository.
-  2. [Install Gitlab Runner](https://docs.gitlab.com/runner/install/linux-repository.html) on your Raspberry Pi. 
-  3. Make the `gitlab-runner` user root.
+  1. Fork this repository on Gitlab, either Gitlab.com any other instance works. Alternatively, you can use any Git remote and use [Gitlab's mirroring](https://docs.gitlab.com/ee/user/project/repository/repository_mirroring.html) to handle the contrinious deployment for you.
+  2. [Install the Gitlab Runner](https://docs.gitlab.com/runner/install/linux-repository.html) on your Raspberry Pi.
+  3. Make the `gitlab-runner` user root. This is necessary, as we will need elevated rights when deploying this codebase as a Unix service.
   4. Register the [Gitlab runner](https://docs.gitlab.com/runner/register/):
      1. `sudo gitlab-runner register`
      2. `Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com )` 
