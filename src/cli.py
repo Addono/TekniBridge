@@ -43,15 +43,15 @@ if __name__ == '__main__':
         # See if any new Yeelights were discovered
         if not new_lights_queue.empty():
             bulb = Yeelight.from_discover_bulbs_dict(new_lights_queue.get())
-            lights.append(bulb)
+            mqtt_listener.add_light(bulb)
 
         # Give control to the lights
-        for light in lights:
+        for light in mqtt_listener.get_lights():
             try:
                 light.control()
             except KeyboardInterrupt:
                 pass  # Ignore keyboard interrupts
             except Exception as e:
                 sentry_sdk.capture_exception(e)
-                lights.remove(light)
+                mqtt_listener.remove_light(light)
                 print("Exception found for light %s: %s" % (light, e))

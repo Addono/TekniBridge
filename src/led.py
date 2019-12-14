@@ -17,11 +17,19 @@ class Led:
     def __eq__(self, other):
         """Overrides the default implementation"""
         return (self.red == other.red and self.blue == other.blue and self.green == other.green and self.brightness
-        == other.brightness)
+                == other.brightness)
 
-    def similar(self,other, disparity = 0.05):
-        return (abs(self.red - other.red) < disparity and abs(self.green - other.green)< disparity and
-                abs(self.blue - other.blue) < disparity and abs(self.brightness - other.brightness)< disparity)
+    def with_brightness(self, brightness: float):
+        """
+        Creates a new LED instance with the same colors, but new brightness
+        @param brightness: The brightness of the new LED object
+        @return: a new LED instance with the same colors, but new brightness
+        """
+        return Led(self.red, self.green, self.blue, brightness)
+
+    def similar(self, other, disparity=0.05, only_color=False):
+        return (abs(self.red - other.red) < disparity and abs(self.green - other.green) < disparity and
+                abs(self.blue - other.blue) < disparity and (only_color or abs(self.brightness - other.brightness) < disparity))
 
     def __str__(self) -> str:
         return "|".join(map(lambda x: str(round(x * 100)), [self.red, self.green, self.blue, self.brightness]))

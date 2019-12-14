@@ -2,17 +2,17 @@ import json
 import random
 import sys
 import time
-from typing import List
+from typing import List, Optional
 
 import paho.mqtt.client as mqtt
 
 from bridges import AbstractLight
-from transitions import Sudden, Fade, ThermalCycle, Wipe, Christmas
+from transitions import Sudden, Fade, ThermalCycle, Wipe, Christmas, AbstractTransition
 
 
 class MqttListener:
     def __init__(self, lights: List[AbstractLight]):
-        self.lights = lights
+        self._lights = lights
 
         self.host = "mqtt.eclipse.org"
         self.port = 1883
@@ -24,6 +24,8 @@ class MqttListener:
         self.client.on_message = self.on_message
 
         self.brightness = 0
+        self.transition_name = "sudden"
+        self.transition_params = {"red": 1, "blue": 1, "green": 1}
 
     def connect(self):
         self.client.connect(self.host, self.port, keepalive=60)
@@ -77,34 +79,47 @@ class MqttListener:
     def handle_brightness_message(self, payload):
         self.brightness = payload["brightness"]
 
-        for light in self.lights:
+        for light in self._lights:
             light.transition.brightness = self.brightness
 
     def handle_state_message(self, payload):
-        params = payload["params"]
-        transition_name = payload["transition"]
+        self.transition_name = payload["transition"].lower()
+        self.transition_params = payload["params"]
 
-        if not transition_name:
-            print("Something went wrong")
-            return
+        for light in self._lights:
+            self.update_light(light)
 
-        for light in self.lights:
-            # Create and assign a new transition object to the light
-            if transition_name == "sudden":
-                print("Sudden mode activated")
-                light.transition = Sudden(**params)
-            elif transition_name == "fade":
-                print("Fade mode activated")
-                light.transition = Fade(**params)
-            elif transition_name == "thermalCycle":
-                print("Thermal cycle mode activated")
-                light.transition = ThermalCycle()
-            elif transition_name == "wipe":
-                light.transition = Wipe(**params)
-            elif transition_name == "christmas":
-                light.transition = Christmas()
-            else:
-                light.transition = Sudden(1.0, 0.0, 0.0)
+    def add_light(self, light: AbstractLight):
+        self._lights.append(light)
+        self.update_light(light)
 
+    def remove_light(self, light: AbstractLight):
+        self._lights.remove(light)
+
+    def get_lights(self):
+        return self._lights
+
+    def update_light(self, light: AbstractLight):
+        # Create a new transition object from the payload
+        transition = self.transition_builder()
+
+        if transition:
             # Set the brightness of this new transition
-            light.transition.brightness = self.brightness
+            transition.brightness = self.brightness
+
+            light.transition = transition
+        else:
+
+            print("Skip updating light as no transition object could be generated")
+
+    def transition_builder(self) -> Optional[AbstractTransition]:
+        if self.transition_name == "sudden" and self.transition_params:
+            return Sudden(**self.transition_params)
+        elif self.transition_name == "fade" and self.transition_params:
+            return Fade(**self.transition_params)
+        elif self.transition_name == "thermal_cycle":
+            return ThermalCycle()
+        elif self.transition_name == "wipe" and self.transition_params:
+            return Wipe(**self.transition_params)
+        elif self.transition_name == "christmas":
+            return Christmas()

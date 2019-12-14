@@ -8,4 +8,4 @@ class FadeArray(AbstractTransition):
         self.targets = None
 
     def step(self, previous):
-        return [led_previous.blend(led_target, self.rate) for led_previous, led_target in zip(previous, self.targets)]
+        return [led_previous.blend(led_target, self.rate).with_brightness(self.brightness) for led_previous, led_target in zip(previous, self.targets)]

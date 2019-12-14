@@ -25,6 +25,6 @@ class Christmas(FadeArray):
 
     def converged(self, previous) -> bool:
         for target_led, previous_led in zip(self.targets, previous):
-            if not target_led.similar(previous_led):
+            if not target_led.similar(previous_led, only_color=True):
                 return False
         return True
