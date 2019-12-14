@@ -49,4 +49,5 @@ if __name__ == '__main__':
                 light.control()
             except Exception as e:
                 sentry_sdk.capture_exception(e)
-                print(e)
+                lights.remove(light)
+                print("Exception found for light %s: %s" % (light, e))
