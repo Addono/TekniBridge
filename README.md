@@ -1,6 +1,6 @@
 # TekniBridge
 
-[![GitLab pipeline](https://img.shields.io/gitlab/pipeline/ioteknikringen/teknibridge?style=for-the-badge)](https://gitlab.com/ioteknikringen/teknibridge/builds)
+[![GitLab pipeline](https://img.shields.io/gitlab/pipeline/ioteknikringen/teknibridge?style=for-the-badge)](https://gitlab.com/ioteknikringen/teknibridge/builds) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://img.shields.io/badge/Project%20Status-Active-brightgreen?style=for-the-badge)](https://www.repostatus.org/#active) [![Licence](https://img.shields.io/badge/Licence-BSD_2--Clause-black?style=for-the-badge)](./LICENCE)
 
 ## Table of Contents
 + [About](#about)
