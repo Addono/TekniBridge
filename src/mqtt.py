@@ -4,13 +4,10 @@ import sys
 import time
 from typing import List
 
-
 import paho.mqtt.client as mqtt
 
-
 from bridges import AbstractLight
-from transitions import Sudden, Fade, ThermalCycle, Wipe, FadeArray, Christmas
-
+from transitions import Sudden, Fade, ThermalCycle, Wipe, Christmas
 
 
 class MqttListener:
@@ -87,21 +84,19 @@ class MqttListener:
             print("Something went wrong")
             return
 
-        if transition_name == "sudden":
-            print("Sudden mode activated")
-            transition = Sudden(**params)
-        elif transition_name == "fade":
-            print("Fade mode activated")
-            transition = Fade(**params)
-        elif transition_name == "thermalCycle":
-            print("Thermal cycle mode activated")
-            transition = ThermalCycle()
-        elif transition_name == "wipe":
-            transition = Wipe(**params)
-        elif transition_name == "christmas":
-            transition = Christmas()
-        else:
-            transition = Sudden(1.0, 0.0, 0.0)
-
         for light in self.lights:
-            light.transition = transition
+            if transition_name == "sudden":
+                print("Sudden mode activated")
+                light.transition = Sudden(**params)
+            elif transition_name == "fade":
+                print("Fade mode activated")
+                light.transition = Fade(**params)
+            elif transition_name == "thermalCycle":
+                print("Thermal cycle mode activated")
+                light.transition = ThermalCycle()
+            elif transition_name == "wipe":
+                light.transition = Wipe(**params)
+            elif transition_name == "christmas":
+                light.transition = Christmas()
+            else:
+                light.transition = Sudden(1.0, 0.0, 0.0)
