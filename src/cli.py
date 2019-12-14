@@ -47,6 +47,8 @@ if __name__ == '__main__':
         for light in lights:
             try:
                 light.control()
+            except KeyboardInterrupt:
+                pass  # Ignore keyboard interrupts
             except Exception as e:
                 sentry_sdk.capture_exception(e)
                 lights.remove(light)
