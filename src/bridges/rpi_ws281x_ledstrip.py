@@ -32,7 +32,7 @@ class RpiWs281xLedstrip(AbstractLight):
 
     def write(self):
         # Update the value for each of the pixels in the strip
-        for i in range(startLED, min(self.pixel_strip.numPixels(), len(self.leds))):
+        for i in range(startLED, self.pixel_strip.numPixels()):
             [red, green, blue, brightness] = self.leds[i]
             colors = (int(c * brightness * 255) for c in (red, green, blue))
             self.pixel_strip.setPixelColorRGB(i, *colors, 255)
