@@ -13,6 +13,8 @@ run:
       || (pip3 install virtualenv && virtualenv -p python3 $INSTALL_DIR/venv && $INSTALL_DIR/venv/bin/python3 -m pip install -r requirements-prod.txt -r requirements.txt)
     # Copy the source code
     - sudo cp -r . $INSTALL_DIR
+    # Remove all compiled Python code
+    - sudo find $INSTALL_DIR -name '*.pyc' -delete
     # Update the service
     - |
         sudo echo "
