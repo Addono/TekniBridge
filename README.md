@@ -8,7 +8,7 @@
 + [Usage](#usage)
 
 ## About <a name = "about"></a>
-This project is part of TekniLight, a simple DIY IoT lighting project. Specifically, this is the bridge between [TekniFront](https://gitlab.com/ioteknikringen/teknifront) and the light controllers. Currently, two light controllers are supported: WS2811 LED strips and Yeelight WiFi bulbs.
+This project is part of TekniIoT, a simple DIY IoT lighting project. Specifically, this is the bridge between [TekniFront](https://gitlab.com/ioteknikringen/teknifront) and the light controllers. Currently, two light controllers are supported: WS2811 LED strips and Yeelight WiFi bulbs.
 
 ## Getting Started <a name = "getting_started"></a>
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [usage](#usage) for notes on how to deploy the project on a Raspberry Pi.
