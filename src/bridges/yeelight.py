@@ -56,8 +56,11 @@ class Yeelight(AbstractLight):
 
                     # Update the brightness
                     self.bulb.set_brightness(brightness * 100)  # Scale from [0, 1] to [0, 100]
-                    self.previous_brightness = brightness
                     send_messages_count += 1
+
+                # Always update the brightness, even in case we turned it off, as the light will
+                # do this internally.
+                self.previous_brightness = brightness
 
             rgb = [int(255 * c) for c in [red, green, blue]]
             # Prevent updating the color if it either didn't change or we're backing off
