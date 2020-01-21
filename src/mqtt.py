@@ -14,7 +14,7 @@ class MqttListener:
     def __init__(self, lights: List[AbstractLight]):
         self._lights = lights
 
-        self.host = "mqtt.eclipse.org"
+        self.host = "test.mosquitto.org"
         self.port = 1883
         client_id = "tek-" + str(random.randint(0, 10000000))
 
