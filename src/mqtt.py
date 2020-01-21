@@ -15,13 +15,14 @@ class MqttListener:
         self._lights = lights
 
         self.host = "test.mosquitto.org"
-        self.port = 1883
+        self.port = 8081
         client_id = "tek-" + str(random.randint(0, 10000000))
 
-        self.client = mqtt.Client(client_id=client_id, clean_session=False)
+        self.client = mqtt.Client(client_id=client_id, clean_session=False, transport="websockets")
         self.client.connected_flag = False
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
+        self.client.tls_set()
 
         self.brightness = 0
         self.transition_name = "sudden"
