@@ -1,6 +1,3 @@
-# Manually exclude both IDEs
-.idea
-.vscode
 
 # Created by https://www.gitignore.io/api/visualstudiocode,macos,linux,windows,venv,python,jetbrains
 # Edit at https://www.gitignore.io/?templates=visualstudiocode,macos,linux,windows,venv,python,jetbrains
