@@ -33,6 +33,12 @@ Activate the virtual environment.
 source venv/bin/activate
 ```
 
+Alternatively to `virtualenv`, one can use `direnv`:
+```bash
+echo "layout_python3" > .envrc
+direnv allow
+```
+
 Install all `pip` dependencies.
 ```bash
 pip install -r requirements.txt
