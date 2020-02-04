@@ -16,24 +16,19 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 This project requires Python 3, currently only 3.7 is actively supported and tested.
 
-We will be using a virtual environment for our Python installation. Install `virtualenv` if you haven't already.
-
-```bash
-pip install virtualenv
-```
+We will be using a virtual environment for our Python installation. Install either [`virtualenv`](https://virtualenv.pypa.io/en/stable/installation.html) or [`direnv`](https://direnv.net/docs/installation.html) if you haven't already.
 
 ### Installing
-Create a virtual Python environment.
+Setup `virtualenv`:
 ```bash
+# Create a virtual Python environment.
 virtualenv venv
-```
 
-Activate the virtual environment.
-```bash
+# Activate the virtual environment.
 source venv/bin/activate
 ```
 
-Alternatively to `virtualenv`, one can use `direnv`:
+Or as an alternative to `virtualenv`, one can use `direnv`:
 ```bash
 echo "layout_python3" > .envrc
 direnv allow
