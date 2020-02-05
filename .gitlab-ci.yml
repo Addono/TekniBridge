@@ -8,9 +8,10 @@ run:
   script:
     # Install dependencies in case they are not yet installed, uses which for pip3 as "pip3 -V" is very slow.
     - (python3 -V && which pip3) || sudo apt-get install python3 python3-pip -y
-    # First try to load the current venv, otherwise install a new one
-    - ($INSTALL_DIR/venv/bin/python3 -m pip install -r requirements-prod.txt -r requirements.txt)
-      || (pip3 install virtualenv && virtualenv -p python3 $INSTALL_DIR/venv && $INSTALL_DIR/venv/bin/python3 -m pip install -r requirements-prod.txt -r requirements.txt)
+    # First try to load the current venv, otherwise create a new one
+    - $INSTALL_DIR/venv/bin/python3 -V || (pip3 install virtualenv && virtualenv -p python3 $INSTALL_DIR/venv)
+    # Install requirements
+    - $INSTALL_DIR/venv/bin/python3 -m pip install -r requirements-prod.txt -r requirements.txt
     # Copy the source code
     - sudo cp -r . $INSTALL_DIR
     # Remove all compiled Python code
