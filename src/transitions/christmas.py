@@ -1,3 +1,4 @@
+from typing import List
 from random import randint
 
 from led import Led
@@ -14,7 +15,7 @@ class Christmas(FadeArray):
     def __init__(self, rate=0.05):
         super().__init__(rate=rate)
 
-    def step(self, previous):
+    def step(self, previous: List[Led]) -> List[Led]:
         if self.targets is None:
             self.targets = previous
 
