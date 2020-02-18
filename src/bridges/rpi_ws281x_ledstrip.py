@@ -27,6 +27,7 @@ class RpiWs281xLedstrip(AbstractLight):
 
     def __init__(self) -> None:
         super().__init__(led_count=LED_COUNT)
+        
         self.pixel_strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
         self.pixel_strip.begin()
 
