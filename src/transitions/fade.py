@@ -1,3 +1,5 @@
+from typing import List
+
 from led import Led
 from transitions import AbstractTransition
 
@@ -15,5 +17,5 @@ class Fade(AbstractTransition):
         self.target.brightness = brightness
         AbstractTransition.brightness.fset(self, brightness)
 
-    def step(self, previous):
+    def step(self, previous: List[Led]) -> List[Led]:
         return [led.blend(self.target, self.rate) for led in previous]
