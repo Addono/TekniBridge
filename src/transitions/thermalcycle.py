@@ -1,5 +1,7 @@
 import datetime
 
+from typing import List, Union
+
 from led import Led
 from transitions import AbstractTransition
 
@@ -126,7 +128,7 @@ class ThermalCycle(AbstractTransition):
         self.target = Led(1, 1, 1, 1)
 
     @AbstractTransition.brightness.setter
-    def brightness(self, brightness):
+    def brightness(self, brightness: Union[float, int]):
         self.target.brightness = brightness
         AbstractTransition.brightness.fset(self, brightness)
 
@@ -135,7 +137,7 @@ class ThermalCycle(AbstractTransition):
         [r, g, b] = KELVIN_TABLE[temperature]
         self.target = Led(r / 255.0, g / 255.0, b / 255.0, self.brightness)
 
-    def step(self, previous):
+    def step(self, previous: List[Led]) -> List[Led]:
         if 7 <= datetime.datetime.now().hour < 15:
             self.set_temp(8000)
         elif 15 <= datetime.datetime.now().hour < 18:
