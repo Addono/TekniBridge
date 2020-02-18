@@ -14,11 +14,13 @@ class MqttListener:
     def __init__(self, lights: List[AbstractLight]):
         self._lights = lights
 
-        self.host = "test.mosquitto.org"
-        self.port = 8081
+        self.host = "mqtt.flespi.io"
+        self.port = 443
+        username = "A1HdHeUGdsN6is4njYK6zvCPJ07azPaXGH1bLJHN2lJ8BCjJqUFNf5rMWmLj1J6w"
         client_id = "tek-" + str(random.randint(0, 10000000))
 
         self.client = mqtt.Client(client_id=client_id, clean_session=False, transport="websockets")
+        self.client.username_pw_set(username=username)
         self.client.connected_flag = False
         self.client.on_connect = self.on_connect
         self.client.on_message = self.on_message
