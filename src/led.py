@@ -1,4 +1,6 @@
-class Led:
+from collections import Sequence
+
+class Led(Sequence):
     """
     Represents an individual RGB LED. 
     
@@ -52,7 +54,7 @@ class Led:
         """
         Create a linearly scaled instance of this LED.
         """
-        assert 0 <= alpha <= 1
+        assert 0.0 <= alpha <= 1.0
 
         scaled_values = (alpha * v for v in self)
         return Led(*scaled_values)
@@ -62,7 +64,7 @@ class Led:
         Blends - linearly scales - between two Leds. Returns self when alpha is zero, returns the other LED if
         alpha is one.
         """
-        assert 0 <= alpha <= 1
+        assert 0.0 <= alpha <= 1.0
 
         mixed_values = ((1 - alpha) * v1 + alpha * v2 for v1, v2 in zip(self, other))
         return Led(*mixed_values)
