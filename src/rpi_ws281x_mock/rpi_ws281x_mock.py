@@ -1,8 +1,3 @@
-try:
-    xrange(0)
-except NameError:
-    xrange = range
-
 
 def Color(red, green, blue, white=0):
     """Convert the provided red, green, blue color to a 24-bit color value.
@@ -19,7 +14,7 @@ class _LED_Data(object):
 
     def __init__(self, size):
         self.size = size
-        self.data = [0 for _ in xrange(size)]
+        self.data = [0 for _ in range(size)]
 
     def __getitem__(self, pos):
         """Return the 24-bit RGB color value at the provided position or slice
@@ -28,7 +23,7 @@ class _LED_Data(object):
         # Handle if a slice of positions are passed in by grabbing all the values
         # and returning them in a list.
         if isinstance(pos, slice):
-            return [self.data[n] for n in xrange(*pos.indices(self.size))]
+            return [self.data[n] for n in range(*pos.indices(self.size))]
         # Else assume the passed in value is a number to the position.
         else:
             return self.data[pos]
@@ -41,7 +36,7 @@ class _LED_Data(object):
         # LED data values to the provided values.
         if isinstance(pos, slice):
             index = 0
-            for n in xrange(*pos.indices(self.size)):
+            for n in range(*pos.indices(self.size)):
                 self.data[n] = value[index]
                 index += 1
         # Else assume the passed in value is a number to the position.
