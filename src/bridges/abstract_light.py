@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 from led import Led
-from transitions import Sudden
+from transitions import AbstractTransition, Sudden
 
 
 class AbstractLight(ABC):
@@ -14,7 +14,7 @@ class AbstractLight(ABC):
         super().__init__()
 
         self.leds = [Led(1.0, 1.0, 1.0) for _ in range(led_count)]
-        self.transition = Sudden(0.0, 0.0, 0.0)
+        self.transition: AbstractTransition = Sudden(0.0, 0.0, 0.0)
 
     def control(self):
         """
