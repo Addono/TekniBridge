@@ -1,3 +1,5 @@
+from typing import List
+
 from led import Led
 from transitions import AbstractTransition
 
@@ -14,5 +16,5 @@ class Sudden(AbstractTransition):
         self.target.brightness = brightness
         AbstractTransition.brightness.fset(self, brightness)
 
-    def step(self, previous):
+    def step(self, previous: List[Led]) -> List[Led]:
         return [self.target for _ in previous]
