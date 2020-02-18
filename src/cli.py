@@ -3,10 +3,11 @@ sentry_sdk.init("https://4e23e9f9b616446582af0ce4fc3c7f53@sentry.io/1857022")
 
 from multiprocessing import Queue
 from threading import Thread
+from typing import List
 
 from yeelight import discover_bulbs
 
-from bridges import RpiWs281xLedstrip, Yeelight
+from bridges import AbstractLight, RpiWs281xLedstrip, Yeelight
 from mqtt import MqttListener
 
 
@@ -28,7 +29,7 @@ def discover_yeelights(lights_queue: Queue):
 
 
 if __name__ == '__main__':
-    lights = [RpiWs281xLedstrip()]
+    lights: List[AbstractLight] = [RpiWs281xLedstrip()]
 
     # Create the connection to the MQTT server
     mqtt_listener = MqttListener(lights)
