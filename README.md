@@ -5,6 +5,7 @@
 ## Table of Contents
 + [About](#about)
 + [Getting Started](#getting_started)
++ [Testing](#testing)
 + [Usage](#usage)
 
 ## About <a name = "about"></a>
@@ -18,7 +19,7 @@ This project requires Python 3, currently only 3.7 is actively supported and tes
 
 We will be using a virtual environment for our Python installation. Install either [`virtualenv`](https://virtualenv.pypa.io/en/stable/installation.html) or [`direnv`](https://direnv.net/docs/installation.html) if you haven't already.
 
-### Installing
+### Installing<a name = "installing"></a>
 Setup `virtualenv`:
 ```bash
 # Create a virtual Python environment.
@@ -37,6 +38,9 @@ direnv allow
 Install all `pip` dependencies.
 ```bash
 pip install -r requirements.txt
+
+# Optional dev dependencies, e.g. needed for static code analysis tools
+pip install -r requirements-dev.txt
 ```
 
 Now the application can be started with:
@@ -50,6 +54,15 @@ SIMULATE=1 python src/cli.py
 ```
 Which will look something like this:
 ![Screenrecording](./docs/img/screenrecording_visualizer.gif)
+
+
+## Testing<a name = "testing"></a>
+In order to run the tests, you have to have the optional development dependencies installed in [Installing](#installing)
+
+Run `pyre` to check the type hinting, the CI will fail when this check won't pass:
+```bash
+pyre --source-directory src/ check
+```
 
 ## Usage <a name = "usage"></a>
 ### Deploy to Raspberry Pi
