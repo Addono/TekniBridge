@@ -3,7 +3,7 @@ import os
 from bridges.abstract_light import AbstractLight
 
 try:
-    from rpi_ws281x import PixelStrip
+    from rpi_ws281x import PixelStrip  # pyre-ignore
 except ModuleNotFoundError:
     if os.environ.get('SIMULATE', False):
         print("simulation enabled")

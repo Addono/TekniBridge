@@ -1,11 +1,11 @@
-import sentry_sdk
+import sentry_sdk  # pyre-ignore
 sentry_sdk.init("https://4e23e9f9b616446582af0ce4fc3c7f53@sentry.io/1857022")
 
 from multiprocessing import Queue
 from threading import Thread
 from typing import List
 
-from yeelight import discover_bulbs
+from yeelight import discover_bulbs  # pyre-ignore
 
 from bridges import AbstractLight, RpiWs281xLedstrip, Yeelight
 from mqtt import MqttListener

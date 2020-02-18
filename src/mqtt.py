@@ -4,7 +4,7 @@ import sys
 import time
 from typing import List, Optional
 
-import paho.mqtt.client as mqtt
+import paho.mqtt.client as mqtt  # pyre-ignore
 
 from bridges import AbstractLight
 from transitions import Sudden, Fade, ThermalCycle, Wipe, Christmas, AbstractTransition

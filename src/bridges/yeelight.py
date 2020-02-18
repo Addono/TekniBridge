@@ -1,7 +1,7 @@
 import time
 from typing import List
 
-from yeelight import Bulb, BulbException
+from yeelight import Bulb, BulbException  # pyre-ignore
 
 from bridges import AbstractLight
 

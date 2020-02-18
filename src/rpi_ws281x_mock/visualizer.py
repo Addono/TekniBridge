@@ -1,4 +1,4 @@
-import pyglet
+import pyglet  # pyre-ignore
 
 from rpi_ws281x_mock import PixelStrip
 
