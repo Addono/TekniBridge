@@ -10,8 +10,7 @@ variables:
 type-checking:
   stage: static-code-analysis
   script:
-    - pip install pyre-check
-    - pip install -r requirements-prod.txt -r requirements.txt
+    - pip install -r requirements-prod.txt -r requirements.txt -r requirements-dev.txt
     - pyre --source-directory src/ --noninteractive check
  
 run:
