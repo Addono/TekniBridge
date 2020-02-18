@@ -16,9 +16,13 @@ class AbstractTransition:
 
     @brightness.setter
     def brightness(self, brightness: Union[float, int]):
+        # Cast to float
+        brightness = float(brightness)
+
+        # Make sure that it is within the range [0, 1]
         assert 0.0 <= brightness <= 1.0
 
-        self._brightness = float(brightness)
+        self._brightness = brightness
 
     @abstractmethod
     def step(self, previous: List[Led]) -> List[Led]:
