@@ -13,8 +13,7 @@ type-checking:
     - pip install pyre-check
     - pip install -r requirements-prod.txt -r requirements.txt
     - pyre --source-directory src/ --noninteractive check
-  allow_failure: true
-
+ 
 run:
   stage: deploy
   environment:
